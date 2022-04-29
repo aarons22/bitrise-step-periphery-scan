@@ -1,5 +1,4 @@
 #!/bin/bash
-set -ex
 
 if [ -z "${path_to_project}" ] ; then
   echo " [!] Missing required input: path_to_project"
