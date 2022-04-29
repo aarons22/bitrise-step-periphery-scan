@@ -43,10 +43,24 @@ inputs:
       summary: ""
       is_required: true
 
+  - report_file: "periphery_report"
+    opts:
+      title: "The report file name, without extension."
+      summary: "The report file name, without extension."
+      description: |-
+        This will be used as a report file name. Please don't put the extension here. The extension will be determined depending on the reporter that you choose. The default is `periphery_report`.
+      is_required: true
+
 outputs:
   - PERIPHERY_REPORT: null
     opts:
       title: "A Periphery report"
       summary: The generated Periphery report. May be empty if the Periphery succeeded with 0 errors or warnings. This is useful when you want to pass it somewhere else, for example on a Slack channel.
       description: The generated Periphery report. May be empty if the Periphery succeeded with 0 errors or warnings. This is useful when you want to pass it somewhere else, for example on a Slack channel.
+      is_dont_change_value: true
+  - PERIPHERY_REPORT_PATH: null
+    opts:
+      title: "A Periphery report path"
+      summary: The path to the generated Periphery report (by default, it is created by concatenating the `$BITRISE_DEPLOY_DIR` with the `report_file` you provide as one of the inputs to this step.
+      description: The path to the generated Periphery report (by default, it is created by concatenating the `$BITRISE_DEPLOY_DIR` with the `report_file` you provide as one of the inputs to this step.
       is_dont_change_value: true
