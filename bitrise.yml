@@ -35,6 +35,9 @@ workflows:
         run_if: true
         inputs:
         - path_to_project: ../Test/TestScan
+        - xcode_project: TestScan.xcodeproj
+        - schemes: TestScan
+        - targets: TestScan
     - script:
         inputs:
         - content: |

@@ -9,9 +9,48 @@ fi
 
 cd "${path_to_project}"
 
-# TODO: check for periphery file. If not, check parameters to build the scan
+FLAGS=""
 
-output="$(periphery scan --quiet --format checkstyle)"
+if [ "${skip_build}" = "true" ]; then
+    FLAGS="--skip-build $FLAGS"
+fi
+
+if [ "${clean_build}" = "true" ]; then
+    FLAGS="--clean-build $FLAGS"
+fi
+
+CONFIG_FILE=./.periphery.yml
+if [ -f "$CONFIG_FILE" ] ; then
+  echo "Automatically detected .periphery.yml"
+  else 
+  echo "Unable to automatically detect .periphery.yml"
+
+  if [ -s "${xcode_workspace}" ] ; then
+    FLAGS="--workspace ${xcode_workspace} $FLAGS"
+  elif [ -s "${xcode_project}" ] ; then
+    FLAGS="--project ${xcode_project} $FLAGS"
+  else
+    echo " [!] You must supply either the xcode_workspace or xcode_project option"
+    exit 1
+  fi
+
+  if [ ! -s "${schemes}" ] ; then
+    echo " [!] You must supply schemes option"
+    exit 1
+  fi
+
+  FLAGS="--schemes ${schemes} $FLAGS"
+
+  if [ ! -s "${targets}" ] ; then
+    echo " [!] You must supply targets option"
+    exit 1
+  fi
+
+  FLAGS="--targets ${targets} $FLAGS"
+fi
+
+output="$(periphery scan --quiet --format checkstyle ${FLAGS})"
+
 envman add --key "PERIPHERY_REPORT" --value "${output}"
 
 report_path="${BITRISE_DEPLOY_DIR}/${report_file}.xml"

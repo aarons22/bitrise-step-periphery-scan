@@ -43,6 +43,49 @@ inputs:
       summary: ""
       is_required: true
 
+  - skip_build: "false"
+    opts:
+      title: "Skip build"
+      summary: "Skip the project build step"
+      description: |
+        Skip the project build step.
+
+        If enabled the `--skip-build` flag will be appended to all Periphery commands.
+      value_options:
+      - "true"
+      - "false"
+
+  - clean_build: "false"
+    opts:
+      title: "Clean build"
+      summary: "Clean existing build artifacts before building"
+      description: |
+        Clean existing build artifacts before building.
+        If enabled the `--clean-build` flag will be appended to all Periphery commands.
+      value_options:
+      - "true"
+      - "false"
+
+  - xcode_project:
+    opts:
+      title: "Project path"
+      summary: "Path to your project's .xcodeproj - supply this option if your project doesn't have an .xcworkspace"
+
+  - xcode_workspace:
+    opts:
+      title: "Workspace path"
+      summary: "Path to your project's .xcworkspace"
+
+  - schemes:
+    opts:
+      title: "Schemes"
+      summary: "Comma-separated list of schemes that must be built in order to produce the targets passed to the --targets option."
+
+  - targets:
+    opts:
+      title: "Targets"
+      summary: "Comma-separated list of target names to scan."
+
   - report_file: "periphery_report"
     opts:
       title: "The report file name, without extension."
