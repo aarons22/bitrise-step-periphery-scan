@@ -8,7 +8,7 @@ fi
 
 cd "${path_to_project}"
 
-FLAGS=""
+FLAGS="--quiet --format checkstyle"
 
 if [ "${skip_build}" = "true" ]; then
     FLAGS="--skip-build $FLAGS"
@@ -48,7 +48,9 @@ if [ -f "$CONFIG_FILE" ] ; then
   FLAGS="--targets ${targets} $FLAGS"
 fi
 
-output="$(periphery scan --quiet --format checkstyle ${FLAGS})"
+echo "Starting scan with options: ${FLAGS}"
+output="$(periphery scan ${FLAGS})"
+echo "Scan finished, generating report"
 
 envman add --key "PERIPHERY_REPORT" --value "${output}"
 
