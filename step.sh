@@ -8,7 +8,12 @@ fi
 
 cd "${path_to_project}"
 
-FLAGS="--quiet --format checkstyle"
+# TODO: Bitrise expects xml to be formatted to JUnit XML, which is 
+# not the same as the periphery `checkstyle`. A future iteration of this 
+# should either convert to JUnit XML or supported plist format. More info:
+# https://devcenter.bitrise.io/en/testing/test-reports.html#test-reports-overview
+# For now, use `xcode` and manually parse the results
+FLAGS="--quiet --format xcode"
 
 if [ "${skip_build}" = "true" ]; then
     FLAGS="--skip-build $FLAGS"
@@ -54,17 +59,11 @@ echo "Scan finished, generating report"
 
 envman add --key "PERIPHERY_REPORT" --value "${output}"
 
-report_path="${BITRISE_DEPLOY_DIR}/${report_file}.xml"
-echo "${output}" > $report_path
-envman add --key "PERIPHERY_REPORT_PATH" --value "${report_path}"
+# If the output file is empty, then there are no failures
+if [ -n "$output" ]; then
+    echo "[!] Periphery scan failed:"
+    echo $output
+    exit 1
+fi
 
-# Creating the sub-directory for the test run within the BITRISE_TEST_RESULT_DIR:
-test_run_dir="$BITRISE_TEST_RESULT_DIR/Periphery"
-mkdir "$test_run_dir"
-
-# Exporting the JUnit XML test report:
-cp $report_path "$test_run_dir/UnitTest.xml"
-
-# Creating the test-info.json file with the name of the test run defined:
-echo '{"test-name":"Swiftlint"}' >> "$test_run_dir/test-info.json"
 echo "Done"
