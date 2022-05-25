@@ -66,7 +66,7 @@ envman add --key "PERIPHERY_REPORT" --value "${output}"
 # If the output file is empty, then there are no failures
 if [ -n "$output" ]; then
     echo "[!] Periphery scan failed:"
-    echo $output
+    echo "$output"
     exit 1
 fi
 

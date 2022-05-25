@@ -18,4 +18,8 @@ struct TestScanApp: App {
     func unusedFunction() {
         
     }
+
+    func unusedFunction2() {
+        
+    }
 }
