@@ -54,6 +54,11 @@ inputs:
       value_options:
       - "true"
       - "false"
+  
+  - index_store_path:
+    opts:
+      title: "Index Store Path"
+      summary: "Path to index store to use. Implies 'skip_build: true'"
 
   - clean_build: "false"
     opts:

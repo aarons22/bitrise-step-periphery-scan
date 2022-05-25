@@ -17,6 +17,10 @@ FLAGS="--quiet --format xcode"
 
 if [ "${skip_build}" = "true" ]; then
     FLAGS="--skip-build $FLAGS"
+
+    if [ -n "$index_store_path" ]; then
+      FLAGS="$FLAGS --index-store-path ${index_store_path}"
+    fi
 fi
 
 if [ "${clean_build}" = "true" ]; then
